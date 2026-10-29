@@ -9,7 +9,7 @@ async function getAllBooks() {
   return response.data;
 }
 
-async function getBookByISBN(isbn) {
+async function getBooksByISBN(isbn) {
   const response = await axios.get(BASE_URL + '/isbn/' + encodeURIComponent(isbn));
   return response.data;
 }
@@ -24,7 +24,9 @@ async function getBooksByTitle(title) {
   return response.data;
 }
 
-module.exports = { getAllBooks, getBookByISBN, getBooksByAuthor, getBooksByTitle };
+const getBookByISBN = getBooksByISBN; // singular alias for convenience
+
+module.exports = { getAllBooks, getBooksByISBN, getBookByISBN, getBooksByAuthor, getBooksByTitle };
 
 if (require.main === module) {
   (async function main() {
@@ -32,7 +34,7 @@ if (require.main === module) {
       console.log('All books:');
       console.log(JSON.stringify(await getAllBooks(), null, 2));
       console.log('\nBook by ISBN 1:');
-      console.log(JSON.stringify(await getBookByISBN('1'), null, 2));
+      console.log(JSON.stringify(await getBooksByISBN('1'), null, 2));
       console.log('\nBooks by author Chinua Achebe:');
       console.log(JSON.stringify(await getBooksByAuthor('Chinua Achebe'), null, 2));
       console.log('\nBooks by title Things Fall Apart:');
